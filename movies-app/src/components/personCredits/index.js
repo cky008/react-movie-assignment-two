@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 
 const PersonCredits = ({person}) => {
   const { data , error, isLoading, isError } = useQuery(
-    ["personCredits", { id: person.id }],
+    ["personCredits", person.id ],
     getPersonCombinedCredit
   );
 

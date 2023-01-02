@@ -75,4 +75,5 @@
     "prop-types": "^15.8.1",
     "webpack": "^5.74.0"
   }
+  ,"proxy": "http://localhost:8080"
 }

@@ -29,7 +29,7 @@ const MovieDetails = ({ movie , casts }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { id } = useParams();
   const { data: reviews, error, isLoading, isError } = useQuery(
-    ["reviews", { id: id }],
+    ["reviews", id ],
     getMovieReviews
   );
   // console.log(reviews)
