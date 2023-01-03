@@ -17,9 +17,11 @@ Name: Kaiyu Chen
 
 open one terminal  
 `cd movies-api`  
+`npm install`  
 `npm run dev`  
 open another terminal  
 `cd movies-app`  
+`npm install`  
 `npm start`  
 
 ## API Configuration
@@ -37,7 +39,7 @@ open another terminal
 
 ## API Design  
 
-When this movies-api server is running, you can visit this api server's document by visiting [swagger](http://localhost:8080/api-docs/)
+When this movies-api server is running, you can visit this api server's document by visiting [swagger(http://localhost:8080/api-docs/)](http://localhost:8080/api-docs/)
 ![simg1](images/Xnip2023-01-03_08-49-54.jpg)
 ![simg2](images/Xnip2023-01-03_08-50-29.jpg)
 ![simg3](images/Xnip2023-01-03_08-52-09.jpg)
@@ -90,3 +92,8 @@ Updates of the React App:
 ## Independent learning (if relevant)
 
 Now Using [swagger](https://swagger.io/) to document the API by following the instrustion from [wdpm](https://wdpm.gitbook.io/swagger-documentation/).
+
+## Relevant Video Demo  
+[Youtube](https://youtu.be/-3QqqaLmjcQ)  
+[bilibili](https://www.bilibili.com/video/BV1qG4y117Up/)  
+[oneDrive](https://1574666-my.sharepoint.com/:v:/g/personal/fa2nica_1574666_onmicrosoft_com/EdoR3pCrhOVHkouzyhGHHQgBwDRRb2XvsbLWwJLUE60lDw?e=SdPISy)  
