@@ -27,6 +27,8 @@
     "node-fetch": "^2.6.7",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
+    "swagger-jsdoc": "^6.2.7",
+    "swagger-ui-express": "^4.6.0",
     "uniqid": "^5.4.0"
   }
 }

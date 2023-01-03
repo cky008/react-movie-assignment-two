@@ -9,12 +9,76 @@ import movieModel from '../movies/movieModel';
 const router = express.Router(); // eslint-disable-line
 
 // Get all users
+/**
+ * @swagger
+ * /api/users/:
+ *   get:
+ *    tags:
+ *     - "Users"
+ *    summary: "get all users"
+ *    description: "get all users"
+ *    produces:
+ *     - "application/json"
+ *    responses:
+ *      200:
+ *        description: "successful operation"
+ *      404:
+ *        description: "Unable to get users"
+ *      500:
+ *        description: "Internal server error"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
     router.get('/', async (req, res) => {
         const users = await User.find();
         res.status(200).json(users);
     });
 
   // register(Create)/Authenticate User
+  /**
+ * @swagger
+ * /api/users/:
+ *   post:
+ *    tags:
+ *     - "Users"
+ *    summary: "register(Create)/Authenticate User"
+ *    description: "register(Create)/Authenticate User"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: body
+ *       name: user info
+ *       description: The username and password.
+ *       schema:
+ *         type: object
+ *         required:
+ *           - username
+ *           - password
+ *         properties:
+ *           username:
+ *             type: string
+ *           password:
+ *             type: string
+ *     - in: query
+ *       name: action
+ *       description: "register or authenticate"
+ *       type: string
+ *    responses:
+ *      201:
+ *        description: "User created"
+ *      200:
+ *        description: "User authenticated"
+ *      401:
+ *        description: "Unable to authenticate"
+ *      404:
+ *        description: "Unable to reach resource"
+ *      500:
+ *        description: "Internal server error"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
   router.post('/',asyncHandler( async (req, res, next) => {
     if (!req.body.username || !req.body.password) {
       res.status(401).json({success: false, msg: 'Please pass username and password.'});
@@ -44,6 +108,47 @@ const router = express.Router(); // eslint-disable-line
   }));
 
   // Update a user
+    /**
+ * @swagger
+ * /api/users/{id}:
+ *   put:
+ *    tags:
+ *     - "Users"
+ *    summary: "Update a user"
+ *    description: "Update a user"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "id"
+ *       description: "User id number"
+ *       required: true
+ *       schema:
+ *          type: integer
+ *     - in: body
+ *       name: user info
+ *       description: The username and password.
+ *       schema:
+ *         type: object
+ *         required:
+ *           - username
+ *           - password
+ *         properties:
+ *           username:
+ *             type: string
+ *           password:
+ *             type: string
+ *    responses:
+ *      200:
+ *        description: "User updated"
+ *      404:
+ *        description: "Unable to update user"
+ *      500:
+ *        description: "Internal server error"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
   router.put('/:id', async (req, res) => {
     if (req.body._id) delete req.body._id;
     const result = await User.updateOne({
@@ -56,7 +161,45 @@ const router = express.Router(); // eslint-disable-line
     }
     });
 
-//Add a favourite. No Error Handling Yet. Can add duplicates too!
+//Add a favourite. 
+/**
+ * @swagger
+ * /api/users/{userName}/favourites:
+ *   post:
+ *    tags:
+ *     - "Users"
+ *    summary: "Add a favourite"
+ *    description: "Add a favourite"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "userName"
+ *       description: "userName"
+ *       required: true
+ *       schema:
+ *          type: string
+ *     - in: body
+ *       name: movie id
+ *       description: The movie id.
+ *       schema:
+ *         type: object
+ *         required:
+ *           - id
+ *         properties:
+ *           id:
+ *             type: integer
+ *    responses:
+ *      201:
+ *        description: "Movie added to favourites"
+ *      404:
+ *        description: "Unable to post favourite"
+ *      500:
+ *        description: "Internal server error"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
 router.post('/:userName/favourites', asyncHandler(async (req, res) => {
     const newFavourite = req.body.id;
     const userName = req.params.userName;
@@ -71,6 +214,34 @@ router.post('/:userName/favourites', asyncHandler(async (req, res) => {
   }
   }));
 
+  /**
+ * @swagger
+ * /api/users/{userName}/favourites:
+ *   get:
+ *    tags:
+ *     - "Users"
+ *    summary: "get a user's favourites"
+ *    description: "get a user's favourites"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "userName"
+ *       description: "userName"
+ *       required: true
+ *       schema:
+ *          type: string
+ *    responses:
+ *      200:
+ *        description: "Favourite movies returned"
+ *      404:
+ *        description: "Unable to get favourites"
+ *      500:
+ *        description: "Internal server error"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
   router.get('/:userName/favourites', asyncHandler( async (req, res) => {
     const userName = req.params.userName;
     const user = await User.findByUserName(userName);
@@ -78,6 +249,40 @@ router.post('/:userName/favourites', asyncHandler(async (req, res) => {
   }));
 
   //Delete a favourite
+    /**
+ * @swagger
+ * /api/users/{userName}/movie/{id}/favourites:
+ *   post:
+ *    tags:
+ *     - "Users"
+ *    summary: "delete a user's one favourite movie"
+ *    description: "delete a user's one favourite movie"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "userName"
+ *       description: "user name"
+ *       required: true
+ *       schema:
+ *          type: string
+ *     - in: path
+ *       name: "id"
+ *       description: "movie id number"
+ *       required: true
+ *       schema:
+ *          type: integer
+ *    responses:
+ *      201:
+ *        description: "Favourite movies deleted"
+ *      404:
+ *        description: "Unable to delete favourites"
+ *      500:
+ *        description: "Internal server error"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
 router.post('/:username/movie/:id/favourites', asyncHandler(async (req, res) => {
   const newFavourite = req.params.id;
   const userName = req.params.username;

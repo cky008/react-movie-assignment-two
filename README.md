@@ -12,6 +12,7 @@ Name: Kaiyu Chen
  + User reviews are now stored in MongoDB and can be accessed through MongoDB.
  + New validation using regular expressions. 
  + Most APIs now support error handling and have new express middleware.
+ + Using swagger to document all APIs.
 ## Setup requirements.
 
 open one terminal  
@@ -35,6 +36,11 @@ open another terminal
     ______________________
 
 ## API Design  
+
+When this movies-api server is running, you can visit this api server's document by visiting [swagger](http://localhost:8080/api-docs/)
+![simg1](images/Xnip2023-01-03_08-49-54.jpg)
+![simg2](images/Xnip2023-01-03_08-50-29.jpg)
+![simg3](images/Xnip2023-01-03_08-52-09.jpg)
 
 ### [Movies](movies-api/api/movies/index.js)  
 + /api/movies/tmdb/discover/page:page | GET | Gets a list of movies for the home page.  
@@ -83,4 +89,4 @@ Updates of the React App:
 
 ## Independent learning (if relevant)
 
-There is currently no independent learning content.  
+Now Using [swagger](https://swagger.io/) to document the API by following the instrustion from [wdpm](https://wdpm.gitbook.io/swagger-documentation/).

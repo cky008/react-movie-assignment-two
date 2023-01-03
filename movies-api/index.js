@@ -13,6 +13,7 @@ import passport from './authenticate';
 
 dotenv.config();
 
+
 const errHandler = (err, req, res, next) => {
   /* if the error in development then send stack trace to display whole error,
   if it's in production then just send error message  */
@@ -26,6 +27,9 @@ const app = express();
 
 const port = process.env.PORT;
 
+const swaggerJsDoc = require('swagger-jsdoc');
+
+const swaggerUi = require('swagger-ui-express');
 app.use(express.json());
 
 app.use(passport.initialize());
@@ -43,6 +47,36 @@ app.use('/api/users', usersRouter);
 app.use('/api/reviews', reviewsRouter);
 
 app.use(errHandler);
+
+var path = require('path');
+const swaggerOpt = {
+    definition: {
+      openapi: '3.0.0',
+      info: {
+        title: 'Movies API',
+        version: '1.0.0',
+        description: 'A simple Express Movies API, backend for a movie review website application',
+        contact: {
+          name: 'Movies API Support',
+          url: 'https://www.youtube.com/channel/UCEKKxXCBsG3wbZTTmuAsdVg',
+          email: 'greatcky83@gmail.com',
+        },
+        servers: [
+          { 
+            url: 'http://localhost:8080',
+            description: 'Development server',
+          },
+        ],
+    }
+  },
+  apis:['./api/movies/index.js',
+   './api/genres/index.js',
+    './api/people/index.js',
+     './api/users/index.js',
+      './api/reviews/index.js']
+};
+const swaggerSpec = swaggerJsDoc(swaggerOpt);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.listen(port, () => {
   console.info(`Server running at ${port}`);

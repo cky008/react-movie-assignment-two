@@ -6,6 +6,32 @@ import { getPersonPopular, getPerson, getPersonImages, getPersonCombinedCredit }
 const router = express.Router();
 let Regex = /^[1-9][0-9]*$/;
 
+/**
+ * @swagger
+ * /api/people/tmdb/popular/page{page}:
+ *   get:
+ *    tags:
+ *     - "People"
+ *    summary: "Get popular people"
+ *    description: "Get popular people"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "page"
+ *       description: "Page number"
+ *       required: true
+ *       schema:
+ *          type: integer
+ *    responses:
+ *      200:
+ *        description: "successful operation"
+ *      404:
+ *        description: "People not found"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
 router.get('/tmdb/popular/page:page', asyncHandler(async (req, res) => {
     const page = req.params.page;
     if (!Regex.test(page)) {
@@ -17,6 +43,34 @@ router.get('/tmdb/popular/page:page', asyncHandler(async (req, res) => {
     }
     }));
 
+/**
+ * @swagger
+ * /api/people/tmdb/person/{id}:
+ *   get:
+ *    tags:
+ *     - "People"
+ *    summary: "Get specific person"
+ *    description: "Get specific person"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "id"
+ *       description: "Person id number"
+ *       required: true
+ *       schema:
+ *          type: integer
+ *    responses:
+ *      200:
+ *        description: "successful operation"
+ *      404:
+ *        description: "Person not found"
+ *      500:
+ *        description: "Internal server error"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
 router.get('/tmdb/person/:id', asyncHandler(async (req, res) => {
     const id = req.params.id;
     if (!Regex.test(id)) {
@@ -28,6 +82,34 @@ router.get('/tmdb/person/:id', asyncHandler(async (req, res) => {
     }
     }));
 
+    /**
+ * @swagger
+ * /api/people/tmdb/person/{id}/images:
+ *   get:
+ *    tags:
+ *     - "People"
+ *    summary: "Get specific person images URL"
+ *    description: "Get specific person images URL"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "id"
+ *       description: "Person id number"
+ *       required: true
+ *       schema:
+ *          type: integer
+ *    responses:
+ *      200:
+ *        description: "successful operation"
+ *      404:
+ *        description: "Person not found"
+ *      500:
+ *        description: "Internal server error"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
 router.get('/tmdb/person/:id/images', asyncHandler(async (req, res) => {
     const id = req.params.id;
     if (!Regex.test(id)) {
@@ -39,6 +121,34 @@ router.get('/tmdb/person/:id/images', asyncHandler(async (req, res) => {
     }
     }));
 
+        /**
+ * @swagger
+ * /api/people/tmdb/person/{id}/combined_credits:
+ *   get:
+ *    tags:
+ *     - "People"
+ *    summary: "Get specific person combined credits"
+ *    description: "Get specific person combined credits"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "id"
+ *       description: "Person id number"
+ *       required: true
+ *       schema:
+ *          type: integer
+ *    responses:
+ *      200:
+ *        description: "successful operation"
+ *      404:
+ *        description: "Person not found"
+ *      500:
+ *        description: "Internal server error"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
 router.get('/tmdb/person/:id/combined_credits', asyncHandler(async (req, res) => {
     const id = req.params.id;
     if (!Regex.test(id)) {

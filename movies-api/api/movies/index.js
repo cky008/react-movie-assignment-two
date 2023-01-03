@@ -14,7 +14,6 @@ router.get('/', asyncHandler(async (req, res) => {
 }));
 
 // Get movie details
-// Get movie details
 router.get('/:id', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     if (!Regex.test(id)) {
@@ -75,6 +74,32 @@ router.post('/:id/reviews', (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /api/movies/tmdb/upcoming/page{page}:
+ *   get:
+ *    tags:
+ *     - "Movies"
+ *    summary: "Get upcoming movies"
+ *    description: "Get upcoming movies"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "page"
+ *       description: "Page number"
+ *       required: true
+ *       schema:
+ *          type: integer
+ *    responses:
+ *      200:
+ *        description: "successful operation"
+ *      404:
+ *        description: "Movie not found"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
 router.get('/tmdb/upcoming/page:page', asyncHandler( async(req, res) => {
     const page = parseInt(req.params.page);
     if (!Regex.test(page)) {
@@ -86,6 +111,32 @@ router.get('/tmdb/upcoming/page:page', asyncHandler( async(req, res) => {
     }
   }));
 
+  /**
+ * @swagger
+ * /api/movies/tmdb/top_rated/page{page}:
+ *   get:
+ *    tags:
+ *     - "Movies"
+ *    summary: "Get top rated movies"
+ *    description: "Get top rated movies"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "page"
+ *       description: "Page number"
+ *       required: true
+ *       schema:
+ *          type: integer
+ *    responses:
+ *      200:
+ *        description: "successful operation"
+ *      404:
+ *        description: "Movie not found"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
 router.get('/tmdb/top_rated/page:page', asyncHandler(async (req, res) => {
     const page = parseInt(req.params.page);
     if (!Regex.test(page)) {
@@ -97,6 +148,32 @@ router.get('/tmdb/top_rated/page:page', asyncHandler(async (req, res) => {
     }
 }));
 
+/**
+ * @swagger
+ * /api/movies/tmdb/discover/page{page}:
+ *   get:
+ *    tags:
+ *     - "Movies"
+ *    summary: "Get homepage movies"
+ *    description: "Get homepage movies"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "page"
+ *       description: "Page number"
+ *       required: true
+ *       schema:
+ *          type: integer
+ *    responses:
+ *      200:
+ *        description: "successful operation"
+ *      404:
+ *        description: "Movie not found"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
   router.get('/tmdb/discover/page:page', asyncHandler(async (req, res) => {
     const page = parseInt(req.params.page);
     if (!Regex.test(page)) {
@@ -108,6 +185,34 @@ router.get('/tmdb/top_rated/page:page', asyncHandler(async (req, res) => {
     }
 }));
 
+/**
+ * @swagger
+ * /api/movies/tmdb/movie/{id}:
+ *   get:
+ *    tags:
+ *     - "Movies"
+ *    summary: "Get specific movies"
+ *    description: "Get specific movies"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "id"
+ *       description: "Movie id number"
+ *       required: true
+ *       schema:
+ *          type: integer
+ *    responses:
+ *      200:
+ *        description: "successful operation"
+ *      404:
+ *        description: "Movie not found"
+ *      500:
+ *        description: "Internal server error"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
 router.get('/tmdb/movie/:id', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     if (!Regex.test(id)) {
@@ -119,6 +224,34 @@ router.get('/tmdb/movie/:id', asyncHandler(async (req, res) => {
     }
 }));
 
+/**
+ * @swagger
+ * /api/movies/tmdb/movie/{id}/images:
+ *   get:
+ *    tags:
+ *     - "Movies"
+ *    summary: "Get specific movie's images"
+ *    description: "Get specific movie's images URL"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "id"
+ *       description: "Movie id number"
+ *       required: true
+ *       schema:
+ *          type: integer
+ *    responses:
+ *      200:
+ *        description: "successful operation"
+ *      404:
+ *        description: "Movie not found"
+ *      500:
+ *        description: "Internal server error"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
 router.get('/tmdb/movie/:id/images', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     if (!Regex.test(id)) {
@@ -130,6 +263,34 @@ router.get('/tmdb/movie/:id/images', asyncHandler(async (req, res) => {
     }
 }));
 
+/**
+ * @swagger
+ * /api/movies/tmdb/movie/{id}/reviews:
+ *   get:
+ *    tags:
+ *     - "Movies"
+ *    summary: "Get specific movie's reviews"
+ *    description: "Get specific movie's reviews"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "id"
+ *       description: "Movie id number"
+ *       required: true
+ *       schema:
+ *          type: integer
+ *    responses:
+ *      200:
+ *        description: "successful operation"
+ *      404:
+ *        description: "Movie not found"
+ *      500:
+ *        description: "Internal server error"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
 router.get('/tmdb/movie/:id/reviews', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     if (!Regex.test(id)) {
@@ -141,6 +302,34 @@ router.get('/tmdb/movie/:id/reviews', asyncHandler(async (req, res) => {
     }
 }));
 
+/**
+ * @swagger
+ * /api/movies/tmdb/movie/{id}/movie_credits:
+ *   get:
+ *    tags:
+ *     - "Movies"
+ *    summary: "Get specific movie's credits"
+ *    description: "Get specific movie's credits"
+ *    produces:
+ *     - "application/json"
+ *    parameters:
+ *     - in: path
+ *       name: "id"
+ *       description: "Movie id number"
+ *       required: true
+ *       schema:
+ *          type: integer
+ *    responses:
+ *      200:
+ *        description: "successful operation"
+ *      404:
+ *        description: "Movie not found"
+ *      500:
+ *        description: "Internal server error"
+ *    security:
+ *      - api_key: [TMDBAPIKEY]
+ * 
+ */
 router.get('/tmdb/movie/:id/movie_credits', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     if (!Regex.test(id)) {
