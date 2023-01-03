@@ -25,21 +25,7 @@ function LoginPage() {
   };
 
   useEffect(() => {
-  //   if (isLoading) {
-  //     <Spinner />
-  //     return;
-  //   }
-  //   if (user) navigate("/page1");
-  // }, [user, isLoading, navigate]);
-
-  // if (isLoading) {
-  //   return <Spinner />;
-  // }
-
-  // if (isError) {
-  //   return <h1>{error.message}</h1>;
-  // }
-  if (context.isAuthenticated) navigate("/")})
+  if (context.isAuthenticated) navigate("/")});
 
   return (
   <>
@@ -120,22 +106,7 @@ function LoginPage() {
               >
                 Log in
               </Button>
-              {/* <Button
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                className="login__btn login__google" 
-                onClick={signInWithGoogle}
-              >
-                <GoogleIcon />
-                Log in with Google
-              </Button> */}
               <Grid container>
-                {/* <Grid item xs>
-                  <Link to="/reset" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid> */}
                 <Grid item>
                   <Link to="/register" variant="body2">
                     {"Don't have an account? Sign Up"}

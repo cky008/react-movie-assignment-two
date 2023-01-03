@@ -19,34 +19,20 @@ function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [registered, setRegistered] = useState(false);
-  // const [name, setName] = useState("");
-  // const [user, error, isLoading, isError] = useAuthState(auth);
   const navigate = useNavigate();
   const register = () => {
     let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
     let emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const validPassword = passwordRegex.test(password);
     const validEmail = emailRegex.test(email);
-    if (validEmail && validPassword) {
+    if (!validEmail) alert("Please enter a valid email.")
+    else if (!validPassword) alert("Please enter a valid password, it should be: 5 characters long, contain at least one letter and one number")
+    else {
       context.register(email, password);
       setRegistered(true);
     }
     if (registered) navigate("/login");
-    // if (!name) alert("Please enter name");
-    // registerWithEmailAndPassword(name, email, password);
   };
-  // useEffect(() => {
-  //   if (isLoading) return;
-  //   if (user) navigate("/page1");
-  // }, [user, isLoading, navigate]);
-
-  // if (isLoading) {
-  //   return <Spinner />;
-  // }
-
-  // if (isError) {
-  //   return <h1>{error.message}</h1>;
-  // }
 
   return (
     <>
@@ -70,22 +56,6 @@ function RegisterPage() {
           </Typography>
           <Box component="form" noValidate  sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              {/* <Grid item xs={12}>
-                <TextField
-                  autoComplete="given-name"
-                  name="fullName"
-                  required
-                  fullWidth
-                  id="fulltName"
-                  label="Full Name"
-                  autoFocus
-                  type="text"
-                  className="register__textBox"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Full Name"
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -126,16 +96,6 @@ function RegisterPage() {
             >
               Register
             </Button>
-            {/* <Button
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              className="register__btn register__google"
-              onClick={signInWithGoogle}
-            >
-              <GoogleIcon />
-              Register with Google
-            </Button> */}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link to="/login" variant="body2">
