@@ -39,9 +39,9 @@ const App = () => {
         <SiteHeader />
         <MoviesContextProvider>
           <Routes>
-            <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
             <Route element={<ProtectedRoutes />}>
               <Route exact path="/movies/favorites/page:pagination" element={<FavoriteMoviesPage />} />
+              <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
             </Route>
             <Route exact path="/movies/upcoming/page:pagination" element={<UpcomingMoviesPage />} />
             <Route exact path="/movies/toprated/page:pagination" element={<TopRatedPage />} />

@@ -3,6 +3,7 @@ import express from 'express';
 import moviesRouter from './api/movies';
 import genresRouter from './api/genres';
 import peopleRouter from './api/people';
+import reviewsRouter from './api/reviews';
 import './db';
 import './seedData'
 import usersRouter from './api/users';
@@ -38,6 +39,8 @@ app.use('/api/genres', genresRouter);
 app.use('/api/people', peopleRouter);
 
 app.use('/api/users', usersRouter);
+
+app.use('/api/reviews', reviewsRouter);
 
 app.use(errHandler);
 

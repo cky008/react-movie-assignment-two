@@ -82,14 +82,10 @@
       });
     };
   
-  export const getMovieReviews = (id) => {
+  export const getMovieReviews = async (id) => {
     return fetch(
-      `/api/movies/tmdb/movie/${id.queryKey[1]}/reviews`, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'get'
-      }).then(res => {
+      `/api/reviews/movie/${id}/reviews`
+      ).then(res => {
         return res.json();
       }).catch((error) => {
         console.log(error);
@@ -211,5 +207,15 @@ export const deleteFavourite = (username, movie) => {
       'Content-Type': 'application/json'
     },
     method: 'post'
+  }).then(res => res.json())
+};
+
+export const addReview = (username, movie, review) => {
+  return fetch(`/api/reviews/movie/${movie.id}/reviews/${username}`, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    body: JSON.stringify({ author: review.author, movieId: movie.id, content: review.content, rating: review.rating })
   }).then(res => res.json())
 };
