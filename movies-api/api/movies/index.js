@@ -38,7 +38,6 @@ router.get('/:id/reviews', (req, res) => {
         res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
     }
     else {
-
         // find reviews in list
         if (movieReviews.id == id) {
             res.status(200).json(movieReviews);

@@ -1,22 +1,30 @@
 import express from 'express';
 import asyncHandler from 'express-async-handler';
 import Review from './reviewModel'
+import { getMovieReviews } from '../tmdb-api';
 
 const router = express.Router(); 
+let Regex = /^[1-9][0-9]*$/;
 
 // Get movie reviews
 router.get('/movie/:id/reviews', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
-    const movieReviews = await Review.find({movieId: id});
-    if(id){
-        res.status(200).json(movieReviews); 
-    } else {
-        res.status(404).json({
-            message: 'The resource you requested could not be found.',
-            status_code: 404
-        });
+    if (!Regex.test(id)) {
+        res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
     }
-
+    else {
+        const movieReviews = await Review.find({movieId: id});
+        const movieReviewsFromTmdb = await getMovieReviews(id);
+        const movieReviewsCombined = movieReviews.concat(movieReviewsFromTmdb.results);
+        if(id){
+            res.status(200).json(movieReviewsCombined); 
+        } else {
+            res.status(404).json({
+                message: 'The resource you requested could not be found.',
+                status_code: 404
+         });
+        }
+    }
 }));
 
 //Post a movie review
