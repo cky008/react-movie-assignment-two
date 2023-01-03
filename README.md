@@ -36,7 +36,7 @@ open another terminal
 
 ## API Design  
 
-### Movies  
+### [Movies](movies-api/api/movies/index.js)  
 + /api/movies/tmdb/discover/page:page | GET | Gets a list of movies for the home page.  
 + /api/movies/tmdb/upcoming/page:page | GET | Gets a list of movies for the upcoming movie page.  
 + /api/movies/tmdb/top_rated/page:page | GET | Gets a list of movies for the top rated movie page.  
@@ -45,20 +45,20 @@ open another terminal
 + /api/movies/tmdb/movie/:id/reviews | GET | Gets a single movie's reviews.  
 + /api/movies/tmdb/movie/:id/movie_credits | GET | Gets a single movie's credits.  
 
-### People  
+### [People](movies-api/api/people/index.js)  
 + /api/people/tmdb/popular/page:page | GET | Gets popular people for popular people page.  
 + /api/people/tmdb/person/:id | GET | Gets a single person's detail for the person details page.  
 + /api/people/tmdb/person/:id/images | GET | Gets a single person's images.  
 + /api/people/tmdb/person/:id/combined_credits | GET | Gets a single person's combined credits.  
 
-### Genres  
+### [Genres](movies-api/api/genres/index.js)    
 + /api/genres/ | GET | Gets all genres.  
 
-### Reviews  
+### [Reviews](movies-api/api/reviews/index.js)    
 + /api/reviews/movie/:id/reviews | GET | Gets a single movie's reviews both from TMDB and MONGODB.  
 + /api/reviews/movie/:id/reviews/:username | POST | Posts or updates a review from the logged in user for a single movie.  
 
-### Users
+### [Users](movies-api/api/users/index.js)  
 + /api/users/ | GET | Gets all users.  
 + /api/users/ | POST | Registers/Authenticates a user. The body should include username and password.  
 + /api/users/:id | Put | Updates a single user's information.  
