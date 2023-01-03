@@ -1,166 +1,86 @@
 # Assignment 2 - Web API.
 
-Name: Your Name
+Name: Kaiyu Chen
 
 ## Features.
 
-A bullet-point list of the ADDITIONAL features you have implemented in the API **THAT WERE NOT IN THE LABS** (or modifications to existing features)
-
- + Feature 1 
- + Feature 2 
- + Feature 3 
- + etc
-
+ + More new API routes with parameterized URLs.
+ + All APIs used by the frontend are now processed by the backend.
+ + Authentication service is no longer provided by Firebase, but by Movies-API (my backend).
+ + Some pages now require authentication before data can be accessed. (New protected routes.)
+ + Only logged-in users can now leave review or favorite movies.
+ + User reviews are now stored in MongoDB and can be accessed through MongoDB.
+ + New validation using regular expressions. 
+ + Most APIs now support error handling and have new express middleware.
 ## Setup requirements.
 
-[ Outline any non-standard setup steps necessary to run your app locally after cloning the repo.]
+open one terminal  
+`cd movies-api`  
+`npm run dev`  
+open another terminal  
+`cd movies-app`  
+`npm start`  
 
 ## API Configuration
 
-Describe any configuration that needs to take place before running the API. For example, creating an `.env` file and what variables to put in it. Give an example of how this might be done.
+ + create a `.env` file in the movies-api folder as below:
+    ______________________
+    NODE_ENV=development  
+    PORT=8080   
+    HOST=localhost  
+    MONGO_DB=YourMongoURL  
+    SEED_DB=True  
+    SECRET=YourJWTSecret  
+    REACT_APP_TMDB_KEY=YourTMDBApiKey  
+    ______________________
 
-REMEMBER: DON'T PUT YOUR OWN USERNAMES/PASSWORDS/AUTH KEYS IN THE README OR ON GITHUB, just placeholders as indicated below:
+## API Design  
 
-______________________
-NODEENV=development
-PORT=8080
-HOST=
-mongoDB=YourMongoURL
-seedDb=true
-secret=YourJWTSecret
-______________________
+### Movies  
++ /api/movies/tmdb/discover/page:page | GET | Gets a list of movies for the home page.  
++ /api/movies/tmdb/upcoming/page:page | GET | Gets a list of movies for the upcoming movie page.  
++ /api/movies/tmdb/top_rated/page:page | GET | Gets a list of movies for the top rated movie page.  
++ /api/movies/tmdb/movie/:id | GET | Gets a single movie's detail for the movie details page.  
++ /api/movies/tmdb/movie/:id/images | GET | Gets a single movie's images.  
++ /api/movies/tmdb/movie/:id/reviews | GET | Gets a single movie's reviews.  
++ /api/movies/tmdb/movie/:id/movie_credits | GET | Gets a single movie's credits.  
 
-## API Design
-Give an overview of your web API design, perhaps similar to the following: 
+### People  
++ /api/people/tmdb/popular/page:page | GET | Gets popular people for popular people page.  
++ /api/people/tmdb/person/:id | GET | Gets a single person's detail for the person details page.  
++ /api/people/tmdb/person/:id/images | GET | Gets a single person's images.  
++ /api/people/tmdb/person/:id/combined_credits | GET | Gets a single person's combined credits.  
 
-- /api/movies | GET | Gets a list of movies 
-- /api/movies/{movieid} | GET | Gets a single movie 
-- /api/movies/{movieid}/reviews | GET | Get all reviews for movie 
-- /api/movies/{movieid}/reviews | POST | Create a new review for Movie 
+### Genres  
++ /api/genres/ | GET | Gets all genres.  
 
-If you have your API design on an online platform or graphic, please link to it (e.g. [Swaggerhub](https://app.swaggerhub.com/)).
+### Reviews  
++ /api/reviews/movie/:id/reviews | GET | Gets a single movie's reviews both from TMDB and MONGODB.  
++ /api/reviews/movie/:id/reviews/:username | POST | Posts or updates a review from the logged in user for a single movie.  
+
+### Users
++ /api/users/ | GET | Gets all users.  
++ /api/users/ | POST | Registers/Authenticates a user. The body should include username and password.  
++ /api/users/:id | Put | Updates a single user's information.  
++ /api/users/:userName/favourites | POST | Add a single movie to a single user's favourites. The body should include the movie's id.
++ /api/users/:userName/favourites | GET | Gets a single user's all favourite movies.  
++ /api/users/:username/movie/:id/favourites | POST | Delete a speicfic movie from a single user's all favourite movies.
 
 ## Security and Authentication
 
-Give details of authentication/security implemented on the API (e.g. passport/sessions). Indicate which routes are protected.
+JWT Authentication is utilized by the application to manage user sessions for crucial user functions such as favorites and reviews.  
++ Favourite Movies Page (/movies/favorites/)
++ The Review Form Page (/reviews/form/)
 
 ## Integrating with React App
 
-Describe how you integrated your React app with the API. List the views that use your Web API instead of the TMDB API. Describe any other updates to the React app from Assignment One.
+All [api](#api-design) are now use my api (from movies-api) and now most are with error logs.  
+Updates of the React App:  
++ When a user attempts to access a protected page, they are redirected to the login page.  
++ Users can only add their favorite movies to a list after logging in, and the movies marked as favorites (with a red heart icon) will not be visible when the user logs out.  
++ The registration process now includes notifications for incorrect input.  
++ All reviews are now stored in MongoDB, and users can update their own reviews after logging in. These reviews, along with all other reviews from TMDB, will be displayed to other users.  
 
 ## Independent learning (if relevant)
 
-Briefly explain any non-standard features developed for the app. 
-
-# Assignment 1 - ReactJS app.
-
-Name: Kaiyu Chen
-
-## Overview.
-
-This is a web application based on TMDB API, React, MUI, Firebase and AWS Amplify. It is designed to provide information on movies, TV series and actors through a simple web page. It also supports authentication. This is assignment one for the module Web App Development 2.
-
-### Video Demo  
-[Youtube](https://youtu.be/qZVX9r8Ygm0) , [OneDrive](https://1574666-my.sharepoint.com/:v:/g/personal/fa2nica_1574666_onmicrosoft_com/EfYuBTdPG-RJiZWB4ckh8U8BgnrzhY1ILhYbQCUcryANiA?e=x67IXa) or [bilibili](https://www.bilibili.com/video/BV1A3411f7BN/)
-
-### Online Demo
-via [aws amplify](https://main.d1ik5o6ucwnt3f.amplifyapp.com/page1) or [fa2nica.tk](fa2nica.tk)
-
-### Features.
-
-+ Change the style of the site header:  
-  (Home Favourites Upcoming Option4)  
-  to  
-  (Home Movies[Favourites Upcoming] People)  
-  [] is a drop-down menu.  
-+ Add the Top Rated Movies Page.
-+ Add the People page.  
-+ Add the Person Details Page.  
-+ Add Top Billed Cast Card on Movie Detail Page.  
-+ Some new [endpoints](#api-endpoints).
-+ Full Caching support.  
-+ Full pagination support.  
-+ Several extensive data hyperlinkings for individual persons(Acting Movies) and for individual movies(Top Billed Cast).  
-+ Several parameterized URLs for individual person page(like individual movie page) and for every list pages(home, upcoming and people/person).  
-+ New language filter.  
-+ Add Firebase Authentication for Log in/Sign Up/Reset and each header.  
-+ Auto-Deploy to [AWS Amplify](https://main.d1ik5o6ucwnt3f.amplifyapp.com/page1).  
-+ Other further learning parts are mentioned in the [Independent learning](#independent-learning-if-relevant) part.  
-
-
-## Setup requirements.  
-
-### TMDB API  
-
-In order to run cypress tests you must first create a `.env` file in the project base folder.  
-The contents should include the following.  
-```
-REACT_APP_TMDB_KEY=<YOUR_TMDB_API_KEY>
-FAST_REFRESH=false
-```
-### Build  
-
-In order to install needed package,you need run `npm install` first.
-After all done, you can use
-`npm start`
-to start the server, then you can access the web page by
-```
-http://localhost:3000/
-```
-
-## API endpoints.
-
-Old 
-+ Discover list of movies - discover/movie
-+ Movie details - movie/:id
-+ Get the user reviews for a movie - /movie/:id/reviews
-+ Get the images belong to a movie - /movie/:id/images
-+ Movie genres - /genre/movie/list
-+ Get a list of upcoming movies - /movie/upcoming
-
-New 
-+ Discover list of top rated movies (getTopRatedMovies) - movies/toprated 
-+ Discover list of popular people (getPersonPopular) - person 
-+ Get specific person's basic info (getPerson) - person/:id 
-+ Get specific person's images (getPersonImages) - person/:id 
-+ Get specific person's Combined Credit (getPersonCombinedCredit) - person/:id 
-+ Get specific movie's Cast Credit (getMovieCredits) - movies/:id 
-+ The api for List Pages now all have a parameter 'page' for Pagination   
-
-## Routing.  
-
-Old 
-+ / - displays discover movies page.
-+ /movies/favourite - displays user's favourite movies.
-+ /movies/upcoming - displays upcoming movies.
-+ /movies/:id - displays a particular movie's detail.
-+ /reviews/form - User can write reviews for their favorite movies.
-+ /reviews/:id - displays reviews about a movie.
-
-New 
-+ /movies/toprated - displays all movies in rating ranks.
-+ /person - displays all popular people.
-+ /person/:id - displays specific person's info.
-+ /register - for user sign up.
-+ /login - for user log in/sign in.
-+ /reset - for user reset their password.
-
-
-## Independent learning (If relevant).
-
-### Auto-Deploy to AWS Amplify 
-https://aws.amazon.com/getting-started/hands-on/build-react-app-amplify-graphql/module-one/ . 
-
-### Use the ImageListItemBar, Paper, useMediaQuery, Theme, CssBaseline, Icon and etc. Componments from mui 
-https://mui.com/zh/material-ui/api/image-list-item-bar/  
-https://mui.com/zh/material-ui/react-paper/  
-https://mui.com/system/styles/advanced/  
-https://mui.com/material-ui/react-css-baseline/  
-https://mui.com/material-ui/material-icons/  
-etc, ...
-
-### Pagination 
-https://mui.com/zh/material-ui/react-pagination/  
-
-### Firebase Authentication
-https://firebase.google.com/docs/auth/where-to-start?authuser=0
+There is currently no independent learning content.  
