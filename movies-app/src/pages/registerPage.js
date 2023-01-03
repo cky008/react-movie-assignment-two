@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
+import React, {  useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, registerWithEmailAndPassword, signInWithGoogle, } from "../firebase";
-import Spinner from '../components/spinner';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,32 +10,43 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import GoogleIcon from '@mui/icons-material/Google';
+import { AuthContext } from "../contexts/authContext";
 
 function RegisterPage() {
 
+  const context = useContext(AuthContext);
   const theme = createTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [user, error, isLoading, isError] = useAuthState(auth);
+  const [registered, setRegistered] = useState(false);
+  // const [name, setName] = useState("");
+  // const [user, error, isLoading, isError] = useAuthState(auth);
   const navigate = useNavigate();
   const register = () => {
-    if (!name) alert("Please enter name");
-    registerWithEmailAndPassword(name, email, password);
+    let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+    let emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    const validPassword = passwordRegex.test(password);
+    const validEmail = emailRegex.test(email);
+    if (validEmail && validPassword) {
+      context.register(email, password);
+      setRegistered(true);
+    }
+    if (registered) navigate("/login");
+    // if (!name) alert("Please enter name");
+    // registerWithEmailAndPassword(name, email, password);
   };
-  useEffect(() => {
-    if (isLoading) return;
-    if (user) navigate("/page1");
-  }, [user, isLoading, navigate]);
+  // useEffect(() => {
+  //   if (isLoading) return;
+  //   if (user) navigate("/page1");
+  // }, [user, isLoading, navigate]);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
 
-  if (isError) {
-    return <h1>{error.message}</h1>;
-  }
+  // if (isError) {
+  //   return <h1>{error.message}</h1>;
+  // }
 
   return (
     <>
@@ -62,7 +70,7 @@ function RegisterPage() {
           </Typography>
           <Box component="form" noValidate  sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
                   name="fullName"
@@ -77,7 +85,7 @@ function RegisterPage() {
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Full Name"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -118,7 +126,7 @@ function RegisterPage() {
             >
               Register
             </Button>
-            <Button
+            {/* <Button
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
@@ -127,7 +135,7 @@ function RegisterPage() {
             >
               <GoogleIcon />
               Register with Google
-            </Button>
+            </Button> */}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link to="/login" variant="body2">

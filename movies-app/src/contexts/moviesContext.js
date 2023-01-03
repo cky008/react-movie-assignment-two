@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "./authContext";
+import { getFavourites, addFavourite, deleteFavourite } from "../api/tmdb-api";
 
 export const MoviesContext = React.createContext(null);
 
@@ -6,20 +8,29 @@ const MoviesContextProvider = (props) => {
   const [favorites, setFavorites] = useState( [] )
   const [toWatch, setToWatch] = useState( [] )
   const [myReviews, setMyReviews] = useState( {} ) 
+  const userContext = useContext(AuthContext)
+  const email = userContext.userEmail
+  const [favourites, setFavourites] = useState([]);
 
+  useEffect(() => {
+    if (userContext.isAuthenticated) {
+      getFavourites(email).then((favourites) => {
+        setFavourites(favourites);
+      });
+    }
+    else {
+      setFavourites([])
+    }
+  }, [favorites, userContext.isAuthenticated, email])
 
-  const addToFavorites = (movie) => {
-    let newFavorites = [];
-    if (!favorites.includes(movie.id)){
-      newFavorites = [...favorites, movie.id];
-    }
-    else{
-      newFavorites = [...favorites];
-    }
-    setFavorites(newFavorites)
+  const addToFavorites = (username, movie) => {
+    let newFavourites = [];
+    addFavourite(username, movie);
+    newFavourites = getFavourites(username, movie)
+    setFavorites(newFavourites)
   };
 
-  const addToWatch = (movie) => {
+  const addToToWatch = (movie) => {
     let newToWatch = [];
     if (!toWatch.includes(movie.id)){
       newToWatch = [...toWatch, movie.id];
@@ -29,28 +40,28 @@ const MoviesContextProvider = (props) => {
     }
     setToWatch(newToWatch)
   };
-  // console.log(toWatch)
-
-  // We will use this function in a later section
-  const removeFromFavorites = (movie) => {
-    setFavorites( favorites.filter(
-      (mId) => mId !== movie.id
-    ) )
-  };
 
   const addReview = (movie, review) => {
     setMyReviews( {...myReviews, [movie.id]: review } )
   };
-//   console.log(myReviews);
 
-  return (
+  // We will use this function in a later section
+  const removeFavorite = (username, movie) => {
+    let newFavourites = [];
+    deleteFavourite(username, movie);
+    newFavourites = getFavourites(username, movie)
+    setFavorites(newFavourites)
+  };
+
+ return (
     <MoviesContext.Provider
       value={{
         favorites,
+        favourites,
         addToFavorites,
-        removeFromFavorites,
+        removeFavorite,
         addReview,
-        addToWatch,
+        addToToWatch,
       }}
     >
       {props.children}

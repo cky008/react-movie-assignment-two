@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import Spinner from '../components/spinner';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,31 +12,34 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import GoogleIcon from '@mui/icons-material/Google';
+import { AuthContext } from "../contexts/authContext";
 
 function LoginPage() {
-
+  const context = useContext(AuthContext);
   const theme = createTheme();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, error, isLoading, isError] = useAuthState(auth);
+  const login = () => {
+    context.authenticate(email, password);
+  };
 
   useEffect(() => {
-    if (isLoading) {
-      <Spinner />
-      return;
-    }
-    if (user) navigate("/page1");
-  }, [user, isLoading, navigate]);
+  //   if (isLoading) {
+  //     <Spinner />
+  //     return;
+  //   }
+  //   if (user) navigate("/page1");
+  // }, [user, isLoading, navigate]);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
 
-  if (isError) {
-    return <h1>{error.message}</h1>;
-  }
+  // if (isError) {
+  //   return <h1>{error.message}</h1>;
+  // }
+  if (context.isAuthenticated) navigate("/")})
 
   return (
   <>
@@ -116,11 +116,11 @@ function LoginPage() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 className="login__btn"
-                onClick={() => logInWithEmailAndPassword(email, password)}
+                onClick={() => login()}
               >
                 Log in
               </Button>
-              <Button
+              {/* <Button
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
@@ -129,13 +129,13 @@ function LoginPage() {
               >
                 <GoogleIcon />
                 Log in with Google
-              </Button>
+              </Button> */}
               <Grid container>
-                <Grid item xs>
+                {/* <Grid item xs>
                   <Link to="/reset" variant="body2">
                     Forgot password?
                   </Link>
-                </Grid>
+                </Grid> */}
                 <Grid item>
                   <Link to="/register" variant="body2">
                     {"Don't have an account? Sign Up"}

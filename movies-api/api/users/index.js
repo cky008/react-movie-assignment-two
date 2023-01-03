@@ -62,19 +62,29 @@ router.post('/:userName/favourites', asyncHandler(async (req, res) => {
     const userName = req.params.userName;
     const movie = await movieModel.findByMovieDBId(newFavourite);
     const user = await User.findByUserName(userName);
-    if (!user.favourites.includes(movie._id)) {
-        await user.favourites.push(movie._id);
-        await user.save(); 
-        res.status(201).json(user); 
-    }
-    else {
-        res.status(400).json({code: 400, msg: 'Movie already in favourites'});
-    }
+    if (user.favourites.includes(movie.id)) {
+      res.status(201).json({code: 201, msg: 'Already exists in favourites.'})
+  } else {
+    await user.favourites.push(movie.id);
+    await user.save(); 
+    res.status(201).json(user); 
+  }
   }));
 
   router.get('/:userName/favourites', asyncHandler( async (req, res) => {
     const userName = req.params.userName;
-    const user = await User.findByUserName(userName).populate('favourites');
+    const user = await User.findByUserName(userName);
     res.status(200).json(user.favourites);
   }));
+
+  //Delete a favourite
+router.post('/:username/movie/:id/favourites', asyncHandler(async (req, res) => {
+  const newFavourite = req.params.id;
+  const userName = req.params.username;
+  const user = await User.findByUserName(userName);
+  const index = user.favourites.indexOf(newFavourite)
+  await user.favourites.splice(index, 1);
+  await user.save(); 
+  return res.status(201).json(user); 
+}));
 export default router;

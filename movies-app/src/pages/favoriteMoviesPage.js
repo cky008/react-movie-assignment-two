@@ -7,18 +7,25 @@ import Spinner from '../components/spinner'
 import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
 import WriteReview from "../components/cardIcons/writeReview";
 import { useParams } from "react-router-dom";
+import { AuthContext } from "../contexts/authContext";
 
 const FavoriteMoviesPage = () => {
 
+  const userContext = useContext(AuthContext);
+
   const { pagination } = useParams();
 
-  const {favorites: movieIds } = useContext(MoviesContext);
+  const { favourites } = useContext(MoviesContext);
+
+  if(!userContext.isAuthenticated) {
+    MoviesContext.favourites = []
+  }
 
   // Create an array of queries and run in parallel.
   const favoriteMovieQueries = useQueries(
-    movieIds.map((movieId) => {
+    favourites.map((movieId) => {
       return {
-        queryKey: ["movie", movieId ],
+        queryKey: ["movie", movieId],
         queryFn: getMovie,
       };
     })
