@@ -91,7 +91,8 @@ Updates of the React App:
 
 ## Independent learning (if relevant)
 
-Now Using [swagger](https://swagger.io/) to document the API by following the instrustion from [wdpm](https://wdpm.gitbook.io/swagger-documentation/).
+Now Using [swagger](https://swagger.io/) to document the API by following the instrustion from [wdpm](https://wdpm.gitbook.io/swagger-documentation/).  
+Now you can access this movies-api by visiting [heroku(https://agile-ca2-cky-production.herokuapp.com/)](https://agile-ca2-cky-production.herokuapp.com/), and by this way you can also access the [swagger api document](https://agile-ca2-cky-production.herokuapp.com/api-docs/) online.  
 
 ## Relevant Video Demo  
 [Youtube](https://youtu.be/-3QqqaLmjcQ)  
